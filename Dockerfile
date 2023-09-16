@@ -12,5 +12,5 @@ RUN npm install -g pnpm
 WORKDIR /app
 COPY frontend/package.json frontend/pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
-# COPY ./frontend .
+COPY ./frontend .
 CMD ["pnpm", "run", "dev", "--host"]

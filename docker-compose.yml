@@ -13,4 +13,8 @@ services:
       context: .
       target: frontend
     ports: ['5173:5173']
-    volumes: ['./frontend:/app']
+    volumes: 
+      - './frontend:/app'
+      - exclude:/app/node_modules/
+volumes:
+  exclude:
