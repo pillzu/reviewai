@@ -6,7 +6,7 @@ setup:
 > @echo "Creating setup file structure..."
 > @pip3 install virtualenv
 > @if [ ! -d .venv ]; then\
->   @python3 -m venv .venv;\
+>   python3 -m venv .venv;\
 > fi
 > @source .venv/bin/activate
 > @pip install -r requirements.txt
