@@ -1,6 +1,16 @@
 version: "3"
 services:
   web:
-    build: .
+    build: 
+      context: .
+      target: backend
     ports: ['5000:5000']
     volumes: ['.:/app']
+    environment:
+      FLASK_DEBUG: 1
+  frontend:
+    build: 
+      context: .
+      target: frontend
+    ports: ['5173:5173']
+    volumes: ['./frontend:/app']
