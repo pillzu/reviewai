@@ -101,6 +101,6 @@ second review:
 {COMPREHENSIVE_PROMPT}
 """
         response = self.AIClient.generate(
-            prompt=prompt, num_generations=1, truncate="START", max_tokens=1500)
+            prompt=prompt, num_generations=1, truncate="START", max_tokens=1500)[0]
 
-        return response
+        return response.text

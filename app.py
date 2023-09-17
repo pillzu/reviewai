@@ -45,7 +45,7 @@ def home():
     if isPremium:
         text = ai.generate_comprehensive_rating(
             story, summarized_p1, summarized_p2)
-        ret['text'] = text
+        ret['text'] = str(text)
     else:
         isFirstBetter = ai.generate_basic_ratings(
             story, summarized_p1, summarized_p2)
