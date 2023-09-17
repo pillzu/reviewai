@@ -20,7 +20,8 @@ class DataScraper:
         query = f"{self.model} reviews site:{website}"
 
         # Perform the Google search and get the first 4 results
-        search_results = list(search(query, num=4, stop=4, pause=2))
+        search_results = list(search(query, num=4, stop=4, pause=2,
+                              user_agent='your bot 1.0'))
 
         # Loop through the search results
         for idx, result_url in enumerate(search_results, start=1):
@@ -39,10 +40,9 @@ class DataScraper:
 
                     stripped_info = ' '.join(info.stripped_strings)
 
+                    return stripped_info
                 except requests.exceptions.RequestException as e:
                     print(f"Failed to retrieve the web page: {str(e)}")
-
-        return stripped_info
 
     def pcmag(self):
         website = "pcmag.com"
@@ -71,10 +71,10 @@ class DataScraper:
 
                     stripped_info = ' '.join(info.stripped_strings)
 
+                    return stripped_info
+
                 except requests.exceptions.RequestException as e:
                     print(f"Failed to retrieve the web page: {str(e)}")
-
-        return stripped_info
 
     def scrape(self):
         reviews = []
@@ -94,4 +94,4 @@ class DataScraper:
         if pcmag_info:
             reviews.append(pcmag_info)
 
-        return self.model, reviews
+        return reviews
