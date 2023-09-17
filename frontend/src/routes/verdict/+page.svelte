@@ -45,7 +45,7 @@
 					>
 						Product #1
 					</h2>
-					<p class="mt-5 w-full text-4xl text-center">Macbook Air M2</p>
+					<p class="mt-5 w-full text-4xl text-center">$product_1</p>
 				</div>
 				<div class="flex-1">
 					<button class="mt-5 w-5/6 text-lg text-white btn btn-primary">
@@ -61,7 +61,7 @@
 					>
 						Product #2
 					</h2>
-					<p class="mt-5 w-full text-4xl text-center">Dell Latitude Z15</p>
+					<p class="mt-5 w-full text-4xl text-center">$product_2</p>
 				</div>
 			</div>
 		</div>
@@ -71,7 +71,10 @@
 			{#if data.is_premium}
 				<p>{data}</p>
 			{:else}
-				<p>The ideal laptop for your usecase would be {data.suggested_product}</p>
+				<p>
+					The ideal laptop for your usecase would be {data.suggested_product}! Please sign up for
+					our premium membership for a better breakdown
+				</p>
 			{/if}
 		</div>
 	</div>
