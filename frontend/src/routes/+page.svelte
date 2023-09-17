@@ -1,7 +1,6 @@
 <script>
 	import TechReviewer from '$lib/assets/old_uncle.svg';
 	import { story } from '$lib/store';
-	import { fly } from 'svelte/transition';
 	import { goto } from '$app/navigation';
 
 	function handleSubmit(params) {
@@ -32,7 +31,6 @@
 		<textarea
 			name="text"
 			class="p-3 w-5/6 h-40 rounded-lg border-2 resize-none focus:outline-primary"
-			transition:fly={{ delay: 500, duration: 200 }}
 			placeholder="Tell us about yourself and we'll help you find your next laptop..."
 			bind:value={$story}
 		/>

@@ -22,12 +22,11 @@
 
 		<button
 			disabled={$product_1 == '' || $product_2 == '' ? true : false}
-			class="mt-5 w-1/4 text-lg text-white btn btn-primary"
+			class="mt-2 w-1/4 text-lg text-white btn btn-primary"
 			on:click={handleSubmit}
 		>
 			🥳 Give me my review 🥳
 		</button>
-		>
 	</div>
 	<div class="flex w-full h-1/2 text-center">
 		<div class="flex-1">

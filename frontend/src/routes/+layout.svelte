@@ -4,13 +4,16 @@
 	import '@fontsource/mohave';
 	import { isPremium } from '$lib/store';
 	import logo from '$lib/assets/logo.png';
+	import { fade } from 'svelte/transition';
 </script>
 
 <div class="flex flex-col min-h-screen">
 	<nav class="flex justify-between py-6 pr-10 pl-20 w-full">
 		<div class="flex items-center">
 			<img src={logo} alt="ReviewAI logo" class="w-12" />
-			<h1 class="pl-3 text-3xl">ReviewAI</h1>
+			<a href="/">
+				<h1 class="pl-3 text-3xl">ReviewAI</h1>
+			</a>
 		</div>
 		<label class="swap swap-rotate">
 			<input type="checkbox" bind:checked={$isPremium} />
