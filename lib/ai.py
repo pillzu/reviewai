@@ -7,6 +7,9 @@ COMMON_WORDS = [
     "want", "this", "but", "you", "your", "we", "are", "not", "can", "all",
     "have", "has", "has", "was", "if", "when", "here", "there", "now", "then" "I"
 ]
+COMPREHENSIVE_PROMPT = "Based on the user story, understand the two laptops reviews and come up with a detailed feature-wise breakdown of each laptop's suitability for the user's needs. Highlight the key aspects such as performance, portability, battery life, display quality, and any other relevant factors. Finally, make a recommendation on which laptop would be the best choice for the user based on this analysis in exactly 1000 words."
+
+SUMMARIZE_PROMPT = "You are a tech reviewer who wrote about the %s. Talk about all aspects, including the laptop's pros and cons, key features, performance evaluations, design elements, and any distinctive attributes that distinguish it in the market in exactly 500 words."
 
 
 # Helper class
@@ -31,7 +34,30 @@ class AI:
     def __init__(self, api_key: str):
         self.AIClient = cohere.Client(api_key)
 
-    def generate_ratings(self, input: str, review_1: str, review_2):
+    def process_raw_reviews(self, model, reviews):
+        summaries = []
+        for review in reviews:
+            prompt = """context:
+%s
+<end>
+
+%s
+""" % (review, SUMMARIZE_PROMPT % model)
+            response = self.AIClient.generate(
+                prompt=prompt,
+                max_tokens=1200,  # Adjust this value as needed
+                num_generations=1,  # You can specify stop words or phrases to end the response
+                truncate="END"
+            )[0]  # Assuming [0] accesses the first generation
+
+            # Convert the response to a string and then append it to the 'summaries' list
+            summaries.append(response.text)
+
+        # Join the summaries into a single string
+        summary_string = "\n".join(summaries)
+        return summary_string
+
+    def generate_basic_ratings(self, input: str, review_1: str, review_2):
 
         review = Review(review_1, review_2)
         review.cleanReviews()
@@ -56,3 +82,25 @@ class AI:
             return True
         else:
             return False
+
+    def generate_comprehensive_rating(self, input: str, review_1: str, review_2: str):
+        review = Review(review_1, review_2)
+
+        prompt = f"""user-story:
+{input}
+<end>
+
+first review:
+{review.first}
+<end>
+
+second review:
+{review.second}
+<end>
+
+{COMPREHENSIVE_PROMPT}
+"""
+        response = self.AIClient.generate(
+            prompt=prompt, num_generations=1, truncate="START", max_tokens=1500)
+
+        return response
