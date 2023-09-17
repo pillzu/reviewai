@@ -1,0 +1,16 @@
+<script>import { forwardEvents } from '../../core';
+import Flex from './Flex.svelte';
+const events = forwardEvents();
+export const spacing = 2;
+export const orientation = undefined;
+</script>
+
+<Flex
+	gap={spacing}
+	direction={orientation === 'vertical' ? 'column' : 'row'}
+	justifyContent="center"
+	{events}
+	{...$$restProps}
+>
+	<slot />
+</Flex>

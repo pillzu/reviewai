@@ -1,0 +1,14 @@
+<script>import { forwardEvents } from '../../core';
+import Box from '../basic/Box.svelte';
+const events = forwardEvents();
+export let color = 'whiteAlpha.700';
+</script>
+
+<Box
+	border="16px solid"
+	borderColor={color}
+	animation="spin 2s linear infinite"
+	borderRadius="50%"
+	{events}
+	{...$$props}
+/>

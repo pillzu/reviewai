@@ -1,0 +1,14 @@
+import type { ChakraAction, ChakraComponentProps } from '../types';
+/**
+ * Creates and return a class based on a components props
+ *
+ * @param props
+ */
+export declare function createStyle<T extends ChakraComponentProps>({ sx, apply, ...props }: T): string;
+/**
+ * Base action to style nodes
+ *
+ * @param node
+ * @param props
+ */
+export declare const chakra: ChakraAction;

@@ -1,0 +1,25 @@
+type ColorMode = 'light' | 'dark';
+export declare const colorMode: {
+    set(this: void, value: ColorMode): void;
+    update(this: void, updater: import("svelte/store").Updater<ColorMode>): void;
+    subscribe(this: void, run: import("svelte/store").Subscriber<ColorMode>, invalidate?: (value?: ColorMode) => void): import("svelte/store").Unsubscriber;
+    initial: ColorMode;
+    get: import("../utils").StoreCallback<ColorMode>;
+};
+/** Checks if current colorMode is 'dark' or 'light' */
+export declare const isDarkMode: import("svelte/store").Readable<boolean>;
+/**
+ * Here is a function similar to useColorModeValue
+ *
+ * @param light
+ * @param dark
+ * @returns
+ */
+export declare const colorModeValue: <T>(light: T, dark: T) => {
+    set(this: void, value: T): void;
+    update(this: void, updater: import("svelte/store").Updater<T>): void;
+    subscribe(this: void, run: import("svelte/store").Subscriber<T>, invalidate?: (value?: T) => void): import("svelte/store").Unsubscriber;
+    initial: T;
+    get: import("../utils").StoreCallback<T>;
+};
+export {};

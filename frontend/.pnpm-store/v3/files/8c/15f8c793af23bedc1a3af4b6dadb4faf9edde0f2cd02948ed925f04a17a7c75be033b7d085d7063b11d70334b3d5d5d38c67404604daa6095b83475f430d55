@@ -1,0 +1,9 @@
+import type { ChakraAction } from '../types';
+/**
+ * Sets the specified attributes on the given element.
+ *
+ * @param node The node to set attributes on.
+ * @param props The props of a component containing attributes.
+ * @returns An object with an `update` function for updating the props.
+ */
+export declare const attributes: ChakraAction;

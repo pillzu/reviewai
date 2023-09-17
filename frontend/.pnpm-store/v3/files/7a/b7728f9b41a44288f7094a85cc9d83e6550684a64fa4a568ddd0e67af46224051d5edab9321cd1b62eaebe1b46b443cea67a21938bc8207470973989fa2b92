@@ -1,0 +1,35 @@
+import { Plugin } from 'vite';
+import MarkdownIt from 'markdown-it';
+import { FilterPattern } from '@rollup/pluginutils';
+
+interface Options {
+    /**
+     * Enable head support
+     *
+     * @default true
+     */
+    headEnabled?: boolean;
+    /**
+     * Options passed to Markdown It
+     */
+    markdownItOptions?: MarkdownIt.Options;
+    /**
+     * Plugins for Markdown It
+     */
+    markdownItUses?: (MarkdownIt.PluginSimple | [MarkdownIt.PluginSimple | MarkdownIt.PluginWithOptions, any] | any)[];
+    /**
+     * Class names for wrapper div
+     *
+     * @default 'markdown-body'
+     */
+    wrapperClasses?: string | string[];
+    include?: FilterPattern;
+    exclude?: FilterPattern;
+}
+
+/**
+ * Creates vite-plugin-svelte-md
+ */
+declare function export_default(options?: Options): Plugin;
+
+export { Options, export_default as default };

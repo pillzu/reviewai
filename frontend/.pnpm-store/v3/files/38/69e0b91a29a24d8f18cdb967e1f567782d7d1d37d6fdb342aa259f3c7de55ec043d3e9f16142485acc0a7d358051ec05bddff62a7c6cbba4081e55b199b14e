@@ -1,0 +1,46 @@
+import get from 'dash-get';
+import { css, toCSSVar } from '@chakra-ui/styled-system';
+import { themeStore } from '../theme';
+import { system, cx } from './emotion';
+import { runIfFn, filter } from '../utils';
+/**
+ * Creates and return a class based on a components props
+ *
+ * @param props
+ */
+export function createStyle({ sx, apply, ...props }) {
+    const currentTheme = themeStore.get();
+    const themeVars = toCSSVar(currentTheme);
+    /** TODO: handle responsive values as well */
+    const applyVal = apply?.toString() || '';
+    const applyAs = applyVal.includes('.') ? applyVal : `components.${applyVal}`;
+    const { defaultProps, ...config } = get(currentTheme, applyAs) || {};
+    const { size, variant, ...safeProps } = { ...defaultProps, ...props };
+    const style = css({
+        ...config.baseStyle,
+        ...config.sizes?.[size],
+        ...runIfFn(config.variants?.[variant], safeProps)
+    })(themeVars);
+    const customStyle = css({
+        ...safeProps,
+        ...sx
+    })(themeVars);
+    return cx(system(style), system(customStyle), safeProps.class);
+}
+/**
+ * Base action to style nodes
+ *
+ * @param node
+ * @param props
+ */
+export const chakra = (node, props) => {
+    const nodeAttrs = Object.getOwnPropertyNames(Object.getPrototypeOf(node));
+    const update = (newProps) => {
+        const validProps = filter(newProps, (_, key) => !nodeAttrs.includes(String(key)));
+        const className = createStyle(validProps);
+        node.className = className;
+    };
+    // onMount, set initial class
+    update(props);
+    return { update };
+};

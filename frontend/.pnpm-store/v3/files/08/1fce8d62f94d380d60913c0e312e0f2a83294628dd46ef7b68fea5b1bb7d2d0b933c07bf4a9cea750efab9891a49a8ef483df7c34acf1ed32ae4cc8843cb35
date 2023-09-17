@@ -1,0 +1,18 @@
+import { SvelteComponentTyped } from "svelte";
+import { type theme as baseTheme } from '../../theme';
+declare const __propDef: {
+    props: {
+        styles?: {};
+        theme: typeof baseTheme;
+    };
+    events: {
+        [evt: string]: CustomEvent<any>;
+    };
+    slots: {};
+};
+export type GlobalStylesProps = typeof __propDef.props;
+export type GlobalStylesEvents = typeof __propDef.events;
+export type GlobalStylesSlots = typeof __propDef.slots;
+export default class GlobalStyles extends SvelteComponentTyped<GlobalStylesProps, GlobalStylesEvents, GlobalStylesSlots> {
+}
+export {};

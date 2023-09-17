@@ -1,0 +1,17 @@
+<script>import Box from '../basic/Box.svelte';
+import { forwardEvents } from '../../core';
+const events = forwardEvents();
+export const direction = 'row';
+</script>
+
+<Box
+	as="div"
+	display="flex"
+	flexDirection={direction}
+	flexWrap="wrap"
+	alignItems="center"
+	{events}
+	{...$$props}
+>
+	<slot />
+</Box>

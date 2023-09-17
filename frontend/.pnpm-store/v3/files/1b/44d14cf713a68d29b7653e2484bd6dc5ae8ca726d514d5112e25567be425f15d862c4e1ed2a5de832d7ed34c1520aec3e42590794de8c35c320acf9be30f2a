@@ -1,0 +1,334 @@
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+var __async = (__this, __arguments, generator) => {
+  return new Promise((resolve, reject) => {
+    var fulfilled = (value) => {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    };
+    var rejected = (value) => {
+      try {
+        step(generator.throw(value));
+      } catch (e) {
+        reject(e);
+      }
+    };
+    var step = (x) => x.done ? resolve(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
+    step((generator = generator.apply(__this, __arguments)).next());
+  });
+};
+
+// src/index.ts
+import { createFilter } from "@rollup/pluginutils";
+
+// src/markdown.ts
+import MarkdownIt from "markdown-it";
+import grayMatter from "gray-matter";
+
+// src/markdown-it-svelte-tags/index.ts
+var SVELTE_TAGS_RE = /^(?:<svelte:[a-z][^>]*>|<\/svelte:[a-z]+>)/u;
+function plugin(md) {
+  md.inline.ruler.push("svelte-tags", (state) => {
+    if (!state.md.options.html) {
+      return false;
+    }
+    const pos = state.pos;
+    const text = state.src.slice(pos);
+    const match = SVELTE_TAGS_RE.exec(text);
+    if (!match) {
+      return false;
+    }
+    const token = state.push("html_inline", "", 0);
+    token.content = state.src.slice(pos, pos + match[0].length);
+    state.pos += match[0].length;
+    return true;
+  });
+}
+
+// src/utils.ts
+function toArray(n) {
+  if (!Array.isArray(n))
+    return [n];
+  return n;
+}
+function escapeBraces(test) {
+  return test.replace(/[{}]/g, (c) => c === "{" ? "&#123;" : "&#125;");
+}
+
+// src/markdown-it-svelte-curly-braces-escape/index.ts
+function plugin2(md) {
+  const originalCodeBlock = md.renderer.rules.code_block;
+  md.renderer.rules.code_block = (...args) => {
+    return escapeBraces(originalCodeBlock(...args));
+  };
+  const originalCodeInline = md.renderer.rules.code_inline;
+  md.renderer.rules.code_inline = (...args) => {
+    return escapeBraces(originalCodeInline(...args));
+  };
+  const originalFence = md.renderer.rules.fence;
+  md.renderer.rules.fence = (...args) => {
+    return escapeBraces(originalFence(...args));
+  };
+}
+
+// src/head.ts
+var headProperties = [
+  "title",
+  "meta",
+  "link",
+  "base",
+  "style",
+  "script",
+  "htmlAttrs",
+  "bodyAttrs"
+];
+function preprocessHead(frontmatter, options) {
+  if (!options.headEnabled)
+    return frontmatter;
+  const head = frontmatter;
+  const meta = Array.isArray(head.meta) ? [...head.meta] : [];
+  if (head.title) {
+    if (!meta.find((i) => i.property === "og:title"))
+      meta.push({ property: "og:title", content: head.title });
+  }
+  if (head.description) {
+    if (!meta.find((i) => i.property === "og:description"))
+      meta.push({
+        property: "og:description",
+        content: head.description
+      });
+    if (!meta.find((i) => i.name === "description"))
+      meta.push({ name: "description", content: head.description });
+  }
+  if (head.image) {
+    if (!meta.find((i) => i.property === "og:image"))
+      meta.push({ property: "og:image", content: head.image });
+    if (!meta.find((i) => i.property === "twitter:card"))
+      meta.push({
+        name: "twitter:card",
+        content: "summary_large_image"
+      });
+  }
+  const result = {};
+  for (const [key, value] of Object.entries(head)) {
+    if (headProperties.includes(key))
+      result[key] = value;
+  }
+  if (meta.length > 0) {
+    result.meta = meta;
+  }
+  return Object.entries(result).length === 0 ? null : result;
+}
+function headObjToTags(obj) {
+  const tags = [];
+  for (const key of Object.keys(obj)) {
+    if (obj[key] == null)
+      continue;
+    if (key === "title") {
+      tags.push(`<title>${obj[key]}</title>`);
+    } else if (key === "base") {
+      tags.push(`<base ${attrs(__spreadValues({ key: "default" }, obj[key]))}>`);
+    } else if (headProperties.includes(key)) {
+      const value = obj[key];
+      if (Array.isArray(value)) {
+        value.forEach((item) => {
+          tags.push(`<${key} ${attrs(item)}>`);
+        });
+      } else if (value) {
+        tags.push(`<${key} ${attrs(value)}>`);
+      }
+    }
+  }
+  return tags.map(escapeBraces);
+  function attrs(o) {
+    return Object.entries(o).map(([k, v]) => `${k}="${`${v}`.replace(/"/gu, "&quot;")}"`).join(" ");
+  }
+}
+
+// src/markdown.ts
+var SCRIPTS_RE = /(<script[^>]*>)([\s\S]*?)<\/script>/gu;
+var SVELTE_TAGS_RE2 = /(<svelte:[a-z][^>]*>)([\s\S]*?)<\/svelte:[a-z]+>/gu;
+var GET_SVELTE_TAG_NAME_RE = /^svelte:[a-z]+/u;
+var IS_MODULE_CONTEXT_RE = /\bcontext\s*=\s*["']?module["']?/u;
+var IS_SVELTE_TAG_NAME_RE = /^svelte:[a-z]+$/u;
+var TagContent = class {
+  constructor(tagName, defaultAttrs) {
+    this.startTag = "";
+    this.contents = [];
+    this.tagName = tagName;
+    this.defaultAttrs = defaultAttrs;
+  }
+  toTag() {
+    return `${this.startTag || `<${this.tagName}${this.defaultAttrs ? ` ${this.defaultAttrs}` : ""}>`}
+${this.contents.join("\n")}
+</${this.tagName}>`;
+  }
+  addTag(startTag, content) {
+    if (!this.startTag) {
+      this.startTag = startTag;
+    }
+    this.contents.push(content);
+  }
+  add(content) {
+    this.contents.push(content);
+  }
+  prepend(content) {
+    this.contents.unshift(content);
+  }
+};
+function parseHtml(html) {
+  const moduleContext = new TagContent("script", 'context="module"');
+  const instanceScript = new TagContent("script");
+  const svelteTags = [];
+  let newHtml = html.replace(SCRIPTS_RE, (_, startTag, script) => {
+    let scriptContent = instanceScript;
+    if (IS_MODULE_CONTEXT_RE.test(startTag)) {
+      scriptContent = moduleContext;
+    }
+    scriptContent.addTag(startTag, script);
+    return "";
+  });
+  newHtml = newHtml.replace(SVELTE_TAGS_RE2, (_, startTag, inner) => {
+    const tagName = GET_SVELTE_TAG_NAME_RE.exec(
+      startTag.slice(1)
+    )[0].toLowerCase();
+    let svelteTag = svelteTags.find((tag) => tag.tagName === tagName);
+    if (!svelteTag) {
+      svelteTag = new TagContent(tagName);
+      svelteTags.push(svelteTag);
+    }
+    svelteTag.addTag(startTag, inner);
+    return "";
+  });
+  return { html: newHtml, moduleContext, instanceScript, svelteTags };
+}
+function createMarkdownProcessor(options) {
+  const markdownIt = new MarkdownIt(__spreadValues({
+    html: true,
+    linkify: true,
+    typographer: true
+  }, options.markdownItOptions));
+  markdownIt.linkify.set({ fuzzyLink: false });
+  const originalValidateLink = markdownIt.validateLink;
+  markdownIt.validateLink = (url) => {
+    if (!originalValidateLink(url)) {
+      return false;
+    }
+    return !IS_SVELTE_TAG_NAME_RE.test(url);
+  };
+  markdownIt.use(plugin).use(plugin2);
+  options.markdownItUses.forEach((e) => {
+    const [plugin3, ...options2] = toArray(e);
+    markdownIt.use(plugin3, ...options2);
+  });
+  return (id, text) => {
+    var _a, _b;
+    const raw = text.trimEnd();
+    const { wrapperClasses, headEnabled } = options;
+    const parsedFrontmatter = grayMatter(raw);
+    const plainMarkdown = (_a = parsedFrontmatter == null ? void 0 : parsedFrontmatter.content) != null ? _a : raw;
+    let html = markdownIt.render(plainMarkdown, { id });
+    if (wrapperClasses) {
+      html = `<div class="${wrapperClasses}">${html}</div>`;
+    }
+    const parsedHtml = parseHtml(html);
+    const { head, frontmatter } = frontmatterPreprocess(
+      (_b = parsedFrontmatter == null ? void 0 : parsedFrontmatter.data) != null ? _b : {},
+      options
+    );
+    parsedHtml.moduleContext.prepend(
+      `export const frontmatter = ${JSON.stringify(frontmatter)}`
+    );
+    if (headEnabled && head) {
+      let svelteHead = parsedHtml.svelteTags.find(
+        (tag) => tag.tagName === "svelte:head"
+      );
+      if (!svelteHead) {
+        svelteHead = new TagContent("svelte:head");
+        parsedHtml.svelteTags.push(svelteHead);
+      }
+      svelteHead.add(`${headObjToTags(head).join("\n")}`);
+    }
+    const svelteSfc = `${parsedHtml.moduleContext.toTag()}
+${parsedHtml.instanceScript.toTag()}
+${parsedHtml.svelteTags.map((tag) => tag.toTag()).join("\n")}
+${parsedHtml.html}`;
+    return svelteSfc;
+  };
+}
+function frontmatterPreprocess(frontmatter, options) {
+  const head = preprocessHead(frontmatter, options);
+  return { head, frontmatter };
+}
+
+// src/options.ts
+function resolveOptions(userOptions) {
+  var _a;
+  const options = __spreadProps(__spreadValues({
+    headEnabled: true,
+    markdownItOptions: {},
+    markdownItUses: [],
+    include: null,
+    exclude: null
+  }, userOptions), {
+    wrapperClasses: toArray((_a = userOptions.wrapperClasses) != null ? _a : "markdown-body").filter((i) => i).join(" ")
+  });
+  return options;
+}
+
+// src/index.ts
+function src_default(options = {}) {
+  const resolvedOptions = resolveOptions(options);
+  const mdToSvelte = createMarkdownProcessor(resolvedOptions);
+  const filter = createFilter(
+    resolvedOptions.include || /\.md$/,
+    resolvedOptions.exclude
+  );
+  return {
+    name: "vite-plugin-svelte-md",
+    enforce: "pre",
+    transform(raw, id) {
+      if (!filter(id))
+        return void 0;
+      try {
+        return mdToSvelte(id, raw);
+      } catch (e) {
+        this.error(e);
+      }
+      return void 0;
+    },
+    handleHotUpdate(ctx) {
+      if (!filter(ctx.file))
+        return;
+      const defaultRead = ctx.read;
+      ctx.read = function() {
+        return __async(this, null, function* () {
+          return mdToSvelte(ctx.file, yield defaultRead());
+        });
+      };
+    }
+  };
+}
+export {
+  src_default as default
+};

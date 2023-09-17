@@ -1,0 +1,37 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+* {
+	box-sizing: border-box;
+}
+
+html, body {
+	min-height: 100%;
+	text-rendering: optimizeLegibility;
+	font-family: 'Mohave', sans-serif;
+	background-color: #F6F6E8;
+}
+
+textarea, input {
+	background-color: #F6F6E8;
+}
+
+body, ul, ol, dl {
+	margin: 0;
+}
+
+article, aside, audio, 
+footer, header, nav, section, video {
+	display: block; 
+}
+
+textarea { 
+	resize: vertical;
+}
+
+img { 
+	border: none;
+	max-width: 100%;
+}
+

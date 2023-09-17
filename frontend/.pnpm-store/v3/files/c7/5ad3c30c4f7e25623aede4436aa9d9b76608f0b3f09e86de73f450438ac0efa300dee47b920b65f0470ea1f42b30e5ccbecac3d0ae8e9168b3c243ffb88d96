@@ -1,0 +1,12 @@
+<script>import { forwardEvents } from '../../core';
+import Icon from '../basic/Icon.svelte';
+import Button from './Button.svelte';
+export let icon;
+export let wrap = 'div';
+const events = forwardEvents();
+</script>
+
+<Button {events} display="flex" justifyContent="center" alignItems="center" {...$$restProps}>
+	<Icon as={icon} {wrap} />
+	<slot />
+</Button>

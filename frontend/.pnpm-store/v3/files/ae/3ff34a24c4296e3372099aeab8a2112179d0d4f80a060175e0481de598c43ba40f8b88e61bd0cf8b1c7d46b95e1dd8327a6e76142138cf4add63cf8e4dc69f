@@ -1,0 +1,8 @@
+export declare const styles: {
+    global: (props: import("@chakra-ui/styled-system").StyleFunctionProps) => {
+        body: {
+            bg: string;
+            color: string;
+        };
+    };
+};

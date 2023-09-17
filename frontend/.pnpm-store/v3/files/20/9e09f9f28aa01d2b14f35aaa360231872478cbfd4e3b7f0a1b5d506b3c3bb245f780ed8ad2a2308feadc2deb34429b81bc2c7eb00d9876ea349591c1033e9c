@@ -1,0 +1,21 @@
+import { createStore } from '../utils';
+import core from './core';
+import { styles } from './styles';
+import * as components from './components';
+const config = {
+    useSystemColorMode: false,
+    initialColorMode: 'light',
+    cssVarPrefix: 'chakra'
+};
+export const theme = {
+    ...core,
+    ...config,
+    components,
+    styles
+};
+export const themeStore = createStore(() => theme);
+themeStore.subscribe((newTheme) => {
+    Object.assign(theme, newTheme);
+});
+export * from './theme.types';
+export default theme;

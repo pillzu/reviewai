@@ -1,0 +1,19 @@
+<script>import { toCSSVar } from '@chakra-ui/styled-system';
+import { themeStore } from '../../theme';
+import { injectGlobal } from '../../core';
+import { onMount } from 'svelte';
+export let styles = {};
+export let theme;
+injectGlobal({
+    'html, body': {
+        margin: 0,
+        padding: 0
+    },
+    ':host, :root, [data-theme]': toCSSVar($themeStore).__cssVars,
+    ...styles
+});
+onMount(() => {
+    if (theme)
+        themeStore.set(theme);
+});
+</script>
