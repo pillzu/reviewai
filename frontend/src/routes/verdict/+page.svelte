@@ -1,8 +1,25 @@
 <script>
 	import MyLoading from './loading.svelte';
 	import VerdictBot from '$lib/assets/verdict.svg';
+	import { story, product_1, product_2, isPremium } from '$lib/store';
+	import { dev } from '$app/environment';
 	const fetchData = (async () => {
-		return await new Promise((resolve) => setTimeout(resolve, 2000));
+		const url = dev ? 'http://localhost:5000/' : 'https://review-ai.up.railway.app';
+		const resp = await fetch(url, {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				product_1: $product_1,
+				product_2: $product_2,
+				story: $story,
+				is_premium: $isPremium
+			})
+		});
+
+		return await resp.json();
 	})();
 </script>
 
@@ -51,9 +68,13 @@
 		<div
 			class="p-10 my-10 mx-auto mb-20 w-5/6 text-white shadow-2xl min-h-[50%] bg-secondary card card-compact"
 		>
-			hello
+			{#if data.is_premium}
+				<p>{data}</p>
+			{:else}
+				<p>The ideal laptop for your usecase would be {data.suggested_product}</p>
+			{/if}
 		</div>
 	</div>
 {:catch error}
-	<p>An error occurred!</p>
+	<p>An error occurred! {error}</p>
 {/await}

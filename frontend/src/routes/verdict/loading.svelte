@@ -3,7 +3,7 @@
 	import { slide } from 'svelte/transition';
 	import LoadingBot from '$lib/assets/loading-bot.svg';
 
-	let greetings = ['Verge', 'CNET', 'PC Mag'];
+	let greetings = ['Verge', 'CNET', 'PC Mag', 'Your Story'];
 	let index = 0;
 	let roller;
 

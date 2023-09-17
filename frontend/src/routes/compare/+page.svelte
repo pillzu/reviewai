@@ -1,5 +1,11 @@
 <script>
+	import { goto } from '$app/navigation';
 	import PhoneWorld from '$lib/assets/phone.svg';
+	import { product_1, product_2 } from '$lib/store';
+
+	function handleSubmit() {
+		goto('/verdict');
+	}
 </script>
 
 <div class="flex overflow-hidden flex-col w-full h-full">
@@ -14,10 +20,13 @@
 			🔍 You give us the name, we’ll do the research for you 🔍
 		</p>
 
-		<a href="/verdict"
-			><button class="mt-5 w-1/4 text-lg text-white btn btn-primary">
-				🥳 Give me my review 🥳
-			</button></a
+		<button
+			disabled={$product_1 == '' || $product_2 == '' ? true : false}
+			class="mt-5 w-1/4 text-lg text-white btn btn-primary"
+			on:click={handleSubmit}
+		>
+			🥳 Give me my review 🥳
+		</button>
 		>
 	</div>
 	<div class="flex w-full h-1/2 text-center">
@@ -32,6 +41,7 @@
 				placeholder="Type here (Eg. Macbook Air M2 2022)"
 				class="mt-5 w-5/6 max-w-xs text-xl text-center bg-base-100 input"
 				maxlength="94"
+				bind:value={$product_1}
 			/>
 		</div>
 		<div class="flex-1">
@@ -46,6 +56,7 @@
 				placeholder="Type here (Eg. Dell Latitude 7277 2022)"
 				class="mt-5 w-5/6 max-w-xs text-xl text-center input"
 				maxlength="94"
+				bind:value={$product_2}
 			/>
 		</div>
 	</div>

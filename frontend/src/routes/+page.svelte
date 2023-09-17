@@ -1,11 +1,17 @@
 <script>
 	import TechReviewer from '$lib/assets/old_uncle.svg';
+	import { story } from '$lib/store';
 	import { fly } from 'svelte/transition';
+	import { goto } from '$app/navigation';
+
+	function handleSubmit(params) {
+		goto('/compare');
+	}
 </script>
 
 <div class="flex h-full">
 	<div class="grid justify-center items-end h-100% w-1/2">
-		<img src={TechReviewer} alt="Your own tech reviewer" class="w-[90%] h-full" />
+		<img src={TechReviewer} alt="Your own tech reviewer" class="w-[88%] h-full" />
 	</div>
 	<div class="flex flex-col justify-center w-1/2">
 		<hgroup class="mt-0.5">
@@ -26,12 +32,17 @@
 		<textarea
 			name="text"
 			class="p-3 w-5/6 h-40 rounded-lg border-2 resize-none focus:outline-primary"
-			transition:fly
+			transition:fly={{ delay: 500, duration: 200 }}
 			placeholder="Tell us about yourself and we'll help you find your next laptop..."
+			bind:value={$story}
 		/>
-		<a href="/compare">
-			<button class="mt-12 w-5/6 text-lg text-white btn btn-secondary"> 👉 Let's go 👈 </button>
-		</a>
+		<button
+			disabled={$story == '' ? true : false}
+			class="mt-12 w-5/6 text-lg text-white btn btn-secondary"
+			on:click={handleSubmit}
+		>
+			👉 Let's go 👈
+		</button>
 	</div>
 </div>
 
