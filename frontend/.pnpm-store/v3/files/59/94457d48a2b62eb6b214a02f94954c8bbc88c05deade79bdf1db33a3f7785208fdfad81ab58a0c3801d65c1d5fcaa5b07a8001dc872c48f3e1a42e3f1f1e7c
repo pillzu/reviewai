@@ -1,0 +1,114 @@
+import { type StyleFunctionProps } from '@chakra-ui/styled-system';
+declare const _default: {
+    baseStyle?: {
+        width: string;
+        minWidth: number;
+        outline: number;
+        position: string;
+        appearance: string;
+        transitionProperty: string;
+        transitionDuration: string;
+        _disabled: {
+            opacity: number;
+            cursor: string;
+        };
+    };
+    sizes?: {
+        lg: {
+            fontSize: string;
+            px: number;
+            h: number;
+            borderRadius: string;
+        };
+        md: {
+            fontSize: string;
+            px: number;
+            h: number;
+            borderRadius: string;
+        };
+        sm: {
+            fontSize: string;
+            px: number;
+            h: number;
+            borderRadius: string;
+        };
+        xs: {
+            fontSize: string;
+            px: number;
+            h: number;
+            borderRadius: string;
+        };
+    };
+    variants?: {
+        outline: (properties: StyleFunctionProps) => {
+            border: string;
+            borderColor: string;
+            bg: string;
+            _hover: {
+                borderColor: string;
+            };
+            _readOnly: {
+                boxShadow: string;
+                userSelect: string;
+            };
+            _invalid: {
+                borderColor: any;
+                boxShadow: string;
+            };
+            _focusVisible: {
+                zIndex: number;
+                borderColor: any;
+                boxShadow: string;
+            };
+        };
+        filled: (properties: StyleFunctionProps) => {
+            border: string;
+            borderColor: string;
+            bg: string;
+            _hover: {
+                bg: string;
+            };
+            _readOnly: {
+                boxShadow: string;
+                userSelect: string;
+            };
+            _invalid: {
+                borderColor: any;
+            };
+            _focusVisible: {
+                bg: string;
+                borderColor: any;
+            };
+        };
+        flushed: (properties: StyleFunctionProps) => {
+            borderBottom: string;
+            borderColor: string;
+            borderRadius: string;
+            px: string;
+            bg: string;
+            _readOnly: {
+                boxShadow: string;
+                userSelect: string;
+            };
+            _invalid: {
+                borderColor: any;
+                boxShadow: string;
+            };
+            _focusVisible: {
+                borderColor: any;
+                boxShadow: string;
+            };
+        };
+        unstyled: {
+            bg: string;
+            px: string;
+            height: string;
+        };
+    };
+    defaultProps?: {
+        size?: "sm" | "md" | "lg" | "xs";
+        variant?: "outline" | "filled" | "unstyled" | "flushed";
+        colorScheme?: string;
+    };
+};
+export default _default;

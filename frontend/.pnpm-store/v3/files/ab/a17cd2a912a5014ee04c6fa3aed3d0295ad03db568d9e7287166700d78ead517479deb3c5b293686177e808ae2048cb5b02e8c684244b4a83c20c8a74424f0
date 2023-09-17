@@ -1,0 +1,8 @@
+<script>import { forwardEvents } from '../../core';
+import Box from '../basic/Box.svelte';
+const events = forwardEvents();
+</script>
+
+<Box as="button" apply="Button" {events} {...$$props}>
+	<slot />
+</Box>

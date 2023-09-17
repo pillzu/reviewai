@@ -1,0 +1,9 @@
+<script>import { forwardEvents } from '../../core';
+import Box from './Box.svelte';
+const events = forwardEvents();
+export let as = 'svg';
+</script>
+
+<Box {as} {events} apply="Icon" inlineSize="sm" {...$$restProps}>
+	<slot />
+</Box>

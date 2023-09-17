@@ -1,0 +1,10 @@
+import type { ChakraActionNoProps } from '../types';
+/**
+ * Components in svelte are not event emitters, so we need to manually
+ * forward events from the component to the underlying DOM element.
+ * This is a builder. It builds a svelte action used to forward
+ * events from the component to the underlying DOM element.
+ *
+ * @param additionalEvents The additional set of events to listen for
+ */
+export declare function forwardEvents(additionalEvents?: string[]): ChakraActionNoProps;

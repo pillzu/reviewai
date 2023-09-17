@@ -1,0 +1,30 @@
+declare const _default: {
+    baseStyle?: import("@chakra-ui/styled-system").SystemStyleInterpolation;
+    sizes?: {
+        lg: {
+            h: number;
+            w: number;
+        };
+        md: {
+            h: number;
+            w: number;
+        };
+        sm: {
+            h: number;
+            w: number;
+        };
+        xs: {
+            h: number;
+            w: number;
+        };
+    };
+    variants?: {
+        [key: string]: import("@chakra-ui/styled-system").SystemStyleInterpolation;
+    };
+    defaultProps?: {
+        size?: "sm" | "md" | "lg" | "xs";
+        variant?: string | number;
+        colorScheme?: string;
+    };
+};
+export default _default;

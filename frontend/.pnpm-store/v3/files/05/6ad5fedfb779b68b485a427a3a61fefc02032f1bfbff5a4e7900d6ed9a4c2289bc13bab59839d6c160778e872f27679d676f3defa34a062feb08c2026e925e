@@ -1,0 +1,34 @@
+/**
+ * Omit keys from an object
+ *
+ * @param object
+ * @param keys
+ */
+export function omit(object, keys) {
+    return filter(object, (_, key) => !keys.includes(key));
+}
+/**
+ * Filter an object by a predicate function
+ *
+ * @param object
+ * @param predicate
+ */
+export function filter(object, predicate) {
+    const result = {};
+    const filtered = Object.keys(object).filter((key) => {
+        return predicate(object[key], key);
+    });
+    for (const key of filtered) {
+        result[key] = object[key];
+    }
+    return result;
+}
+/**
+ * Pick a subset of keys from an object
+ *
+ * @param object
+ * @param keys
+ */
+export function pick(object, keys) {
+    return filter(object, (_, key) => keys.includes(key));
+}

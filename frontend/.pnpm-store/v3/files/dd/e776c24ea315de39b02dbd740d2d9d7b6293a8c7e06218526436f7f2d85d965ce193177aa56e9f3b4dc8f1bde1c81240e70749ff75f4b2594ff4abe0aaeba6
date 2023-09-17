@@ -1,0 +1,149 @@
+declare const _default: {
+    baseStyle?: {
+        cursor: string;
+        border: string;
+        lineHeight: string;
+        borderRadius: string;
+        fontWeight: string;
+        transitionProperty: string;
+        transitionDuration: string;
+        _focus: {
+            boxShadow: string;
+        };
+        _disabled: {
+            opacity: number;
+            cursor: string;
+            boxShadow: string;
+        };
+        _hover: {
+            _disabled: {
+                bg: string;
+            };
+        };
+    };
+    sizes?: {
+        lg: {
+            h: number;
+            minW: number;
+            fontSize: string;
+            px: number;
+        };
+        md: {
+            h: number;
+            minW: number;
+            fontSize: string;
+            px: number;
+        };
+        sm: {
+            h: number;
+            minW: number;
+            fontSize: string;
+            px: number;
+        };
+        xs: {
+            h: number;
+            minW: number;
+            fontSize: string;
+            px: number;
+        };
+    };
+    variants?: {
+        ghost: (props: any) => {
+            color: string;
+            _hover: {
+                bg: string;
+            };
+            _active: {
+                bg: string;
+            };
+            bg?: undefined;
+        } | {
+            color: string;
+            bg: string;
+            _hover: {
+                bg: string;
+            };
+            _active: {
+                bg: string;
+            };
+        };
+        outline: (props: any) => {
+            color: string;
+            _hover: {
+                bg: string;
+            };
+            _active: {
+                bg: string;
+            };
+            bg?: undefined;
+            border: string;
+            borderColor: string;
+        } | {
+            color: string;
+            bg: string;
+            _hover: {
+                bg: string;
+            };
+            _active: {
+                bg: string;
+            };
+            border: string;
+            borderColor: string;
+        };
+        solid: (props: any) => {
+            bg: string;
+            _hover: {
+                bg: string;
+                _disabled: {
+                    bg: string;
+                };
+            };
+            _active: {
+                bg: string;
+            };
+            color?: undefined;
+        } | {
+            bg: any;
+            color: any;
+            _hover: {
+                bg: any;
+                _disabled: {
+                    bg: any;
+                };
+            };
+            _active: {
+                bg: any;
+            };
+        };
+        link: (props: any) => {
+            padding: number;
+            height: string;
+            lineHeight: string;
+            verticalAlign: string;
+            color: string;
+            _hover: {
+                textDecoration: string;
+                _disabled: {
+                    textDecoration: string;
+                };
+            };
+            _active: {
+                color: string;
+            };
+        };
+        unstyled: {
+            bg: string;
+            color: string;
+            display: string;
+            lineHeight: string;
+            m: number;
+            p: number;
+        };
+    };
+    defaultProps?: {
+        size?: "sm" | "md" | "lg" | "xs";
+        variant?: "link" | "outline" | "solid" | "ghost" | "unstyled";
+        colorScheme?: string;
+    };
+};
+export default _default;
