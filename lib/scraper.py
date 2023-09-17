@@ -85,10 +85,10 @@ class DataScraper:
         #     reviews.append(verge_info)
 
         # Call the cnet function and append its stripped content to the reviews list
-        cnet_info = self.cnet()
-        if cnet_info:
-            reviews.append(cnet_info)
-
+        # cnet_info = self.cnet()
+        # if cnet_info:
+        #     reviews.append(cnet_info)
+        #
         # Call the pcmag function and append its stripped content to the reviews list
         pcmag_info = self.pcmag()
         if pcmag_info:

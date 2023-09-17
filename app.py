@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 from lib.scraper import DataScraper
 from lib.ai import AI
+from flask_cors import CORS
 
 app = Flask(__name__)
 
@@ -62,4 +63,5 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     api_key = str(os.environ.get('COHERE_KEY'))
     ai = AI(api_key)
+    CORS(app)
     app.run(host='0.0.0.0', port=port)

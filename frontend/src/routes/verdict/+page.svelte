@@ -4,7 +4,7 @@
 	import { story, product_1, product_2, isPremium } from '$lib/store';
 	import { dev } from '$app/environment';
 	const fetchData = (async () => {
-		const url = dev ? 'http://localhost:5000/' : 'https://review-ai.up.railway.app';
+		const url = false ? 'http://localhost:5000/' : 'https://review-ai.up.railway.app/';
 		const resp = await fetch(url, {
 			method: 'POST',
 			headers: {
