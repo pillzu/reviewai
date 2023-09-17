@@ -1,28 +1,56 @@
-import requests
+import certifi
+import ssl
+from googlesearch import search
 from bs4 import BeautifulSoup
+import requests
+
+ssl._create_default_https_context = ssl._create_unverified_context
+ssl._create_default_https_context().load_verify_locations(certifi.where())
+
+def scrape(user_query):
+
+# List of target websites
+    target_websites = ["theverge.com", "cnet.com", "techcrunch.com"]
+
+# Initialize a variable to store the review content
+    review_content_string = ""
+
+# Loop through the target websites
+    for website in target_websites:
+        print(f"Searching for '{user_query}' reviews on {website}...")
+
+        # Append "reviews" to the user's query and include the site restriction
+        query = f"{user_query} reviews site:{website}"
+
+        search_results = list(search(query, num=4, stop=4, pause=2))
+
+        # Loop through the search results
+        for idx, result_url in enumerate(search_results, start=1):
+            print(f"Result {idx}: {result_url}")
+
+            # Check if both the target website and "review" are in the URL
+            if website in result_url and 'review' in result_url:
+                try:
+                    # Send an HTTP GET request to the website
+                    response = requests.get(result_url)
+                    response.raise_for_status()
+
+                    # Parse the HTML content of the page using Beautiful Soup
+                    soup = BeautifulSoup(response.text, 'html.parser')
+
+                    # Extract and append the review content to the string
+                    review_content = ' '.join(soup.stripped_strings)
+                    review_content_string += review_content + "\n"
+
+                    print("=" * 50)  
+
+                    
+                    break
+                except requests.exceptions.RequestException as e:
+                    print(f"Failed to retrieve the web page: {str(e)}")
 
 
-class DataScraper:
-    def __init__(self, url):
-        self.url = url
+    print("\nReview Content (Text Only):")
+    print(review_content_string)
 
-    def scrape(self):
-        try:
-            # Send an HTTP GET request to the specified URL
-            response = requests.get(self.url)
-
-            # Check if the request was successful
-            if response.status_code == 200:
-                # Parse the HTML content of the page using BeautifulSoup
-                soup = BeautifulSoup(response.text, 'html.parser')
-
-                # Extract and return the scraped data
-                # You can modify this part to extract specific data you need
-                scraped_data = soup.get_text()
-                return scraped_data
-
-            else:
-                return f"Failed to fetch data. Status code: {response.status_code}"
-
-        except Exception as e:
-            return f"An error occurred: {str(e)}"
+scrape("macbook air m2 2023")
