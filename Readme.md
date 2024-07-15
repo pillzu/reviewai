@@ -6,7 +6,7 @@
 </div>
 
 
-## About ReviewAI
+### About ReviewAI
 
 In the ever-evolving world of technology, finding the perfect laptop that meets all your needs can be a daunting task. That's where **ReviewAI** steps in. Developed with the vision to simplify this process, ReviewAI is an innovative tool that leverages the power of artificial intelligence to assist users in finding their ideal laptop.
 
@@ -30,7 +30,7 @@ By combining these technologies, ReviewAI provides personalized, in-depth evalua
 
 ReviewAI is designed for everyone, from fashion designers who need a stylish yet powerful machine, to tech enthusiasts looking for the latest and greatest in laptop technology. Our solution ensures that no matter your profession or passion, you can make an informed decision about which laptop best suits your unique needs.
 
-## Getting Started
+### Getting Started
 
 To start using ReviewAI, follow these simple steps:
 
@@ -39,6 +39,7 @@ To start using ReviewAI, follow these simple steps:
 3. Get personalized laptop recommendations based on your needs.
 
 
+### Hack The North Submissions
 See our [devpost](https://devpost.com/software/review-ai) from our HTN2023 submission for more details about this project.
 
 <div align="center">
