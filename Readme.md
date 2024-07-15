@@ -39,10 +39,6 @@ To start using ReviewAI, follow these simple steps:
 3. Get personalized laptop recommendations based on your needs.
 
 
-## License
-
-[MIT License](LICENSE.md).
-
 
 ## Hackathon submission
 
