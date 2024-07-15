@@ -34,7 +34,7 @@ ReviewAI is designed for everyone, from fashion designers who need a stylish yet
 
 To start using ReviewAI, follow these simple steps:
 
-1. Visit our website: [ReviewAI Website](https://review-ai.vercel.app/) - need openAI/cohere keys
+1. Visit our website: [ReviewAI Website](https://review-ai.vercel.app/) - need openAI/cohere keys.
 2. Enter to the chatbot a bit about yourself and lifestyle.
 3. Get personalized laptop recommendations based on your needs.
 
