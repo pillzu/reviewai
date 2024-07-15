@@ -39,10 +39,7 @@ To start using ReviewAI, follow these simple steps:
 3. Get personalized laptop recommendations based on your needs.
 
 
-
-## Hackathon submission
-
-[DEVPOST](https://devpost.com/software/review-ai)
+See our [devpost](https://devpost.com/software/review-ai) from our HTN2023 submission for more details about this project.
 
 <div align="center">
 	<b>Find your perfect laptop with ReviewAI - Your solution to making informed decisions.</b>
