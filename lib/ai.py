@@ -86,7 +86,7 @@ class AI:
     def generate_comprehensive_rating(self, input: str, review_1: str, review_2: str):
         review = Review(review_1, review_2)
 
-        prompt = f"""user-story:
+        prompt = f"""user-story: 
 {input}
 <end>
 
